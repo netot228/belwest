@@ -1,0 +1,632 @@
+@import "compass/reset";
+@import "compass/css3";
+
+// fonts
+@font-face {
+    font-family: 'MyriadRegular';
+    src: url('../fonts/MyriadRegular.eot');
+    src: url('../fonts/MyriadRegular.eot') format('embedded-opentype'),
+         url('../fonts/MyriadRegular.woff2') format('woff2'),
+         url('../fonts/MyriadRegular.woff') format('woff'),
+         url('../fonts/MyriadRegular.ttf') format('truetype'),
+         url('../fonts/MyriadRegular.svg#MyriadRegular') format('svg');
+}
+@font-face {
+    font-family: 'MyriadLight';
+    src: url('../fonts/MyriadLight.eot');
+    src: url('../fonts/MyriadLight.eot') format('embedded-opentype'),
+         url('../fonts/MyriadLight.woff2') format('woff2'),
+         url('../fonts/MyriadLight.woff') format('woff'),
+         url('../fonts/MyriadLight.ttf') format('truetype'),
+         url('../fonts/MyriadLight.svg#MyriadLight') format('svg');
+}
+@font-face {
+    font-family: 'MyriadLightSemi';
+    src: url('../fonts/MyriadLightSemi.eot');
+    src: url('../fonts/MyriadLightSemi.eot') format('embedded-opentype'),
+         url('../fonts/MyriadLightSemi.woff2') format('woff2'),
+         url('../fonts/MyriadLightSemi.woff') format('woff'),
+         url('../fonts/MyriadLightSemi.ttf') format('truetype'),
+         url('../fonts/MyriadLightSemi.svg#MyriadLightSemi') format('svg');
+}
+@font-face {
+    font-family: 'MyriadSemi';
+    src: url('../fonts/MyriadSemi.eot');
+    src: url('../fonts/MyriadSemi.eot') format('embedded-opentype'),
+         url('../fonts/MyriadSemi.woff2') format('woff2'),
+         url('../fonts/MyriadSemi.woff') format('woff'),
+         url('../fonts/MyriadSemi.ttf') format('truetype'),
+         url('../fonts/MyriadSemi.svg#MyriadSemi') format('svg');
+}
+
+$grey: #585858;
+$black: #2a2a2a;
+
+// screen
+$pda: 768px;
+$small: 1024px;
+$large: 1600px;
+$huge: 1920px;
+
+// test
+
+@mixin screen-size($media) {
+  @if $media == pda {
+    @media only screen and (max-width: $pda) { @content; }
+  }
+  @else if $media == small {
+    @media only screen and (max-width: $pda + 1) and (max-width: $small) { @content; }
+  }
+  @else if $media == medium {
+    @media only screen and (min-width: $small + 1) and (max-width: $large - 1) { @content; }
+  }
+  @else if $media == large {
+    @media only screen and (min-width: $large) and (max-width: $huge) { @content; }
+    
+  }
+  @else if $media == huge {
+    @media only screen and (min-width: $huge+1) { @content; }
+  }
+}
+@mixin calc($property, $expression) {
+    #{$property}: -moz-calc(#{$expression});
+    #{$property}: -webkit-calc(#{$expression});
+    #{$property}: calc(#{$expression});
+}
+
+%cf {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+%valign {
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        margin-right: -0.25em;
+        vertical-align: middle;
+    }
+}
+
+// reset all bootstrap
+/*
+.i_modify {
+	.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .navigation--top .nav__left {
+		float: none;
+		width: auto !important;
+		min-height: auto;
+		padding: 0;
+	}
+
+}
+*/
+
+body.i_modify {
+	font: normal 14px/1 MyriadRegular, sans-serif;
+	color: $grey;
+    .branding-mobile {
+        display: none !important;
+    }
+	header.js-mainHeader {
+		position: absolute;
+        z-index: 2;
+		top: 0;
+		left: 0;
+		right: 0;
+
+        * {
+            @include box-sizing(border-box);
+        }
+
+        // header elements reset
+		.hidden-xs, .hidden-sm, .hidden-md, .hidden-lg {
+			display: block !important;
+		}
+        .visible-xs, .visible-sm, .visible-md, .visible-lg {
+            display: none !important;
+        }
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12, .navigation--top .nav__left {
+            float: none;
+            width: auto !important;
+            min-height: 0;
+            padding: 0;
+        }
+        .mobile-menu {
+            display: none !important;
+        }
+        .mobile__nav__row, .sticky-nav-top {
+            display: none !important;
+        }
+        .nav__links--primary .glyphicon {
+            display: none !important;
+        }
+        .navigation.navigation--top {
+            padding: 0;
+        }
+        .row {
+            margin: 0;
+        }
+        .navigation--middle .nav-order-tools:hover, .navigation--middle .nav-location:hover, .navigation--middle .nav-cart:hover, .navigation--middle .btn:hover, .navigation--middle .nav-order-tools:active, .navigation--middle .nav-location:active, .navigation--middle .nav-cart:active, .navigation--middle .btn:active, .navigation--middle .nav-order-tools:focus, .navigation--middle .nav-location:focus, .navigation--middle .nav-cart:focus, .navigation--middle .btn:focus {
+            
+            &:hover {
+                background: transparent;
+            }
+        }
+        
+        .navigation.navigation--top {
+            .js-site-logo {
+                position: absolute;
+                z-index: 10;
+                display: block;
+                width: 14% !important;
+                top: 20px;
+                left: 0;
+                right: 0;
+                margin: auto;
+                img {
+                    display: block;
+                    width: 100%;
+                }
+                @include screen-size(pda){
+                    width: 30% !important;
+                    left: 5%;
+                    z-index: 20;
+                    margin: 0;
+                    left: 5%;
+                }
+            }
+            .nav__links--account {
+                position: absolute;
+                z-index: 2;
+                right: 25%;
+                top: 30px;
+                margin: 0;
+                float: none;
+                @include screen-size(pda){
+                    top: 20px;
+                    right: 40%;
+                    
+                }
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 20px;
+                    height: 20px;
+                    background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iUHJvZmlsZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAgMjAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojOWI5YjliO308L3N0eWxlPjwvZGVmcz48dGl0bGU+bG9naW48L3RpdGxlPjxjaXJjbGUgY2xhc3M9ImNscy0xIiBjeD0iMTAiIGN5PSI1LjI3IiByPSI1LjI3Ii8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTMsMTEuMjlhNi4yOSw2LjI5LDAsMCwxLTYsMEM1LjEzLDEzLDIuMywxNC44LDIuMywyMEgxNy43QzE3LjcsMTQuOCwxNC44NywxMywxMywxMS4yOVoiLz48L3N2Zz4=); 
+                    @include screen-size(pda){
+                        width: 26px;
+                        height: 26px;
+                    }                      
+                }
+                li {
+                    position: relative;
+                    display: inline-block;
+                    font-size: 12px;
+                    color: #154259;
+                    height: 20px;
+                    margin: 0;
+                    font: normal 14px/14px MyriadRegular;
+                    color: $grey;
+                    text-transform: none;
+                    
+                    @extend %valign;
+
+                    @include screen-size(small){
+                        font-size: 0;
+                        a {
+                            font-size: 0 !important;
+                        }
+                    }
+                    
+                    a {
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: bottom;
+                        color: inherit;
+                        cursor: pointer;
+                        text-transform: none;
+                        font: normal 14px/14px MyriadRegular;
+                        padding: 0 0 0 25px;
+                        text-decoration: none;
+                        &:hover {
+                            text-decoration: none;
+                        }
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            left: 25px;
+                            right: 0;
+                            height: 1px;
+                            background: $grey;
+                        }                    
+                    }                
+                }
+            }
+            
+        }
+
+        .navigation.navigation--middle.js-navigation--middle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            background: #fff;
+            z-index: 1;
+            border-top: 0 !important;
+            
+            @include screen-size(pda){
+                height: 110px;
+            }
+
+            .container-fluid {
+                padding: 0;
+                
+                // wishlist kill
+                .nav-order-tools.js-nav-order-tools.display-none.NAVcompONENT {
+                    display: none;
+                }
+
+                .nav__left.col-xs-12.col-sm-6 {
+                    padding: 0;
+                }
+                .col-sm-10 {
+                    width: auto !important;
+                }
+                .site-search {
+                    background: transparent !important;
+                    .ui-front {
+                        padding: 0;
+                    }
+                }
+
+                .input-group {
+                    position: absolute;
+                    top: 20px;
+                    left: 5%;
+                    display: block;
+                    min-height: 0;
+                    height: 40px;
+                    width: 340px;
+                    border: 0px solid transparent;
+                    @include border-radius(2px);
+                    font: normal 18px/40px MyriadRegular;
+                    color: $black;
+                    padding: 0;
+
+                    @include screen-size(pda){
+                        top: 60px;
+                        z-index: 20;
+                        @include calc(width, '100% - 50px');
+                    }
+
+                    @include screen-size(small) {
+                        //width: 40px;
+                    }
+                    @include screen-size(medium) {
+                        width: 300px;
+                    }
+
+                    .form-control {
+                        position: relative;
+                        display: block;
+                        z-index: 2;
+                        float: none;
+                        width: 100%;
+                        height: 40px;
+                        border: 1px solid $grey;
+                        @include border-radius(2px);
+                        margin: 0;
+                        padding: 0 40px 0 10px;
+                        font: normal 18px/40px MyriadSemi;
+                        color: $grey;
+                        background: transparent;
+                        outline: 0;
+                        @include opacity(0.3);
+                        @include transition(all 0.3s ease);
+                        @include input-placeholder {
+                            color: $grey;
+                            @include opacity(1);
+                        }
+
+                        @include screen-size(small) {
+                            z-index: 5;
+                            padding: 0 0px 0 40px;
+                            
+                            &:focus {
+                                z-index: 100;
+                                width: 340px;
+                                background: #fff;                                
+                            }
+                            @include input-placeholder {
+                                color: transparent;                                
+                            }
+                        }
+                        @include screen-size(medium) {
+                            width: 300px;
+                        }
+
+                        &:focus, &:hover {
+                            @include opacity(0.65);
+                        }
+                    }
+                    .input-group-btn {
+                        position: absolute;
+                        display: block;
+                        z-index: 3;
+                        right: 0;
+                        top: 0;
+                        width: 40px;
+                        height: 40px;
+                        margin: 0;
+                        padding: 0;
+                        color: transparent;
+                        font-size: 0;
+                        .btn {
+                            width: 100%;
+                            margin: 0;
+                        }
+                        .glyphicon-search {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 40px;
+                            height: 40px;
+                            display: block;
+                            color: transparent;
+                            font-size: 0;
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                width: 22px;
+                                height: 22px;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                margin: auto;
+                                background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDAgNDAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojMDEwMDAyO308L3N0eWxlPjwvZGVmcz48dGl0bGU+c2VhcmNoPC90aXRsZT48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0wLDE2LjE5YTE2LjE5LDE2LjE5LDAsMCwwLDI2LjM2LDEyLjZsMTAuNywxMC43YTEuNzIsMS43MiwwLDAsMCwyLjQ0LTIuNDRsLTEwLjctMTAuN0ExNi4xOSwxNi4xOSwwLDEsMCwwLDE2LjE5Wm0yLjQ5LDBhMTMuNywxMy43LDAsMSwxLDEzLjcsMTMuN0ExMy43MiwxMy43MiwwLDAsMSwyLjQ5LDE2LjE5WiIvPjwvc3ZnPg==) no-repeat;
+                                @include opacity(0.2);
+                                @include transition(all 0.3s ease);
+                            }
+                            @include screen-size(small) {
+                                
+                            }
+                            &:hover:before, &.focus:before {
+                                @include opacity(0.6);
+                            }
+                        }
+                    }
+                }
+
+                ul.nav__links--shop_info {
+                    float: right !important;
+                    li {
+                        float: none !important;
+                        .nav-location {
+                            position: absolute;
+                            top: 30px;
+                            right: 15%;
+                            width: auto;
+                            height: 20px;
+                            padding: 0;
+                            min-width: 0;
+                            border: 0;
+                            float: none;
+
+                            .btn {
+                                position: relative;
+                                padding: 0 0 0 25px;
+                                color: $grey !important;
+                                &:after {
+                                    content: 'Магазин рядом';
+                                    display: inline-block;
+                                    vertical-align: bottom;
+                                    font: normal 14px/14px MyriadRegular;
+                                    color: $grey;
+                                    padding: 0 0 2px 0;
+                                    text-transform: none;                                   
+                                }
+                                &:before {
+                                    content: '';
+                                    display: block;
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 25px;
+                                    right: 0;
+                                    height: 1px;
+                                    background: $grey;
+                                }
+                            }
+                            .glyphicon {
+                                position: absolute;
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                top: 0;
+                                left: 0;
+                                background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAgMjAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojOWI5YjliO308L3N0eWxlPjwvZGVmcz48dGl0bGU+bG9jYXRpb248L3RpdGxlPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwLDBBNy40OSw3LjQ5LDAsMCwwLDMuOTIsMTEuODdsLjIuMjgsNS4zOSw3LjZhLjYyLjYyLDAsMCwwLDEsMGw1LjMyLTcuNTEuMjYtLjM2QTcuNDksNy40OSwwLDAsMCwxMCwwWm0wLDEwYTIuNSwyLjUsMCwxLDEsMi41LTIuNUEyLjUsMi41LDAsMCwxLDEwLDEwWiIvPjwvc3ZnPg==);
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                        }
+                        .nav-cart {
+                            position: absolute;
+                            top: 30px;
+                            right: 5%;
+                            width: auto;
+                            height: 20px;
+                            padding: 0;
+                            min-width: 0;
+                            border: 0;
+                            float: none;
+
+                            .mini-cart-link {
+                                position: relative;
+                                display: inline-block;
+                                padding: 0 0 0 40px;
+                                height: 20px;
+                                margin: 0;
+                                color: $grey !important;
+                                font: normal 14px/14px MyriadRegular;
+                                color: $grey;
+                                @extend %valign;
+                                .mini-cart-icon {
+                                    float: none;
+                                    position: absolute;
+                                    top: -8px;
+                                    left: 0;
+                                    display: block;
+                                    width: 28px;
+                                    height: 28px;
+                                    .glyphicon {
+                                        position: absolute;
+                                        display: block;
+                                        width: 28px;
+                                        height: 28px;
+                                        top: 0;
+                                        left: 0;
+                                        right: 0;
+                                        bottom: 0;
+                                        font-size: 0;
+                                        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNmZjVkNWQ7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5jYXJ0PC90aXRsZT48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05LjE4LDExLjc0YTEuMTcsMS4xNywwLDAsMCwxLjE3LTEuMTdWNmEzLjY5LDMuNjksMCwxLDEsNy4zOCwwdjQuNTVhMS4xNywxLjE3LDAsMCwwLDIuMzMsMFY2QTYsNiwwLDEsMCw4LDZ2NC41NUExLjE3LDEuMTcsMCwwLDAsOS4xOCwxMS43NFoiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yNy40Miw5LjEySDIxLjIydjEuNDVhMi4zMywyLjMzLDAsMCwxLTQuNjcsMFY5LjEyaC01djEuNDVhMi4zMywyLjMzLDAsMCwxLTQuNjcsMFY5LjEySC41OGEuNDQuNDQsMCwwLDAtLjQ0LjU3TDQuMjIsMjYuMzFBMi4zOSwyLjM5LDAsMCwwLDYuNDIsMjhIMjEuNThhMi4zOSwyLjM5LDAsMCwwLDIuMi0xLjY5TDI3Ljg2LDkuNjhBLjQ0LjQ0LDAsMCwwLDI3LjQyLDkuMTJaIi8+PC9zdmc+);
+                                        &:before {
+                                            display: none;
+                                        }
+                                    }                                    
+                                }
+
+                                .mini-cart-count {
+                                    position: absolute;
+                                    display: block;
+                                    top: -8px;
+                                    left: 20px;
+                                    width: 18px;
+                                    height: 18px;
+                                    background: #fff;
+                                    @include border-radius(50%);
+                                    @include box-shadow(inset 0 0 1px rgba(0,0,0,0.2));
+                                    text-align: center;
+                                    &:after {
+                                        display: none;
+                                    }
+                                    &:before {
+                                        content: '';
+                                        display: inline-block;
+                                        top: 0;
+                                        height: 100%;
+                                        margin-right: -0.25em;
+                                        vertical-align: middle;
+                                    }
+
+                                    .nav-items-total {
+                                        position: relative;
+                                        display: inline-block;
+                                        vertical-align: bottom;
+                                        top: auto;
+                                        right: auto;
+                                        font: bold 14px/14px MyriadRegular;
+                                        color: $grey;
+                                        @include screen-size(pda){
+                                            display: inline-block;
+                                            background: transparent;
+                                            border-radius: 0;
+                                            height: auto;
+                                            width: auto;
+                                            color: $grey;
+                                            line-height: 14px;
+                                        }                                       
+                                    }
+                                    .items-desktop {
+                                        display: none !important;
+                                    }
+                                }
+                                .mini-cart-price {
+                                    position: relative;
+                                    top: 0;
+                                    display: inline-block !important;
+                                    vertical-align: baseline;
+                                    padding: 0 0 0 0;
+                                    border-bottom: 1px solid $grey;
+                                    margin: 0;
+                                    float: none;
+                                    font: normal 14px/14px MyriadRegular;
+                                    color: $grey;
+                                    overflow: visible;
+                                    @include screen-size(small){
+                                        font-size: 0;
+                                    }
+                                    &:before {
+                                        content: '';
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        right: 0;
+                                        height: 1px solid $grey;
+                                    }
+                                }
+
+                            }
+                            
+
+                            .btn {
+                                position: relative;
+                                padding: 0 0 0 25px;
+                                color: $grey !important;
+                                &:after {
+                                    content: 'Магазин рядом';
+                                    display: inline-block;
+                                    vertical-align: bottom;
+                                    font: normal 14px/14px MyriadRegular;
+                                    color: $grey;
+                                    padding: 0 0 2px 0;
+                                    text-transform: none;
+                                    @include screen-size(small){
+                                        font-size: 0 !important;
+                                    }
+                                }
+                                &:before {
+                                    content: '';
+                                    display: block;
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 25px;
+                                    right: 0;
+                                    height: 1px;
+                                    background: $grey;
+                                }
+
+                            }
+                            .glyphicon {
+                                position: absolute;
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                top: 0;
+                                left: 0;
+                                background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBkYXRhLW5hbWU9IkNhcGEgMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjAgMjAiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojOWI5YjliO308L3N0eWxlPjwvZGVmcz48dGl0bGU+bG9jYXRpb248L3RpdGxlPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwLDBBNy40OSw3LjQ5LDAsMCwwLDMuOTIsMTEuODdsLjIuMjgsNS4zOSw3LjZhLjYyLjYyLDAsMCwwLDEsMGw1LjMyLTcuNTEuMjYtLjM2QTcuNDksNy40OSwwLDAsMCwxMCwwWm0wLDEwYTIuNSwyLjUsMCwxLDEsMi41LTIuNUEyLjUsMi41LDAsMCwxLDEwLDEwWiIvPjwvc3ZnPg==);
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        
+	}
+	
+}
+@include screen-size(small){
+    body.i_modify header.js-mainHeader .navigation.navigation--middle.js-navigation--middle .container-fluid ul.nav__links--shop_info li .nav-location .btn:after { font-size: 0 }
+}
